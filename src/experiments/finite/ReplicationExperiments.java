@@ -288,16 +288,8 @@ class ReplicationExperiments {
         // START
         while ((event[0].x != 0) || (numberTicket + numberSearch + numberValidation + numberVIPValidation + numberBackstage != 0)) {
 
-            //System.out.println("numberTicket: " + numberTicket);
-            //System.out.println("numberSearch: " + numberSearch);
-            //System.out.println("numberValidation: " + numberValidation);
-            //System.out.println("numberVIPValidation: " + numberVIPValidation);
-            //System.out.println("numberBackstage: " + numberBackstage);
-
             e         = nextEvent(event);                /* next event index */
             t.next    = event[e].t;                        /* next event time  */
-
-            //System.out.println("current Event: " + e);
 
             // update integrals
             areaTicket     += (t.next - t.current) * numberTicket;
@@ -609,7 +601,7 @@ class ReplicationExperiments {
         double sumServices = 0.0;
         double sumServed = 0.0;
 
-        for (s = 1; s <= SERVERS_TICKET; s++) {
+        for (s = Events.ARRIVAL_TICKET; s <= Events.ARRIVAL_TICKET + Events.SERVERS_TICKET -1; s++) {
             sumUtilizations += sum[s].service / ticketFinalTime;
             sumServices += sum[s].service;
             sumServed += sum[s].served;
@@ -635,8 +627,8 @@ class ReplicationExperiments {
         for (s = Events.END_OF_TICKET + Events.ARRIVAL_SEARCH; s <= Events.END_OF_TICKET + Events.SERVERS_SEARCH; s++)
             areaSearch -= sum[s].service;
 
-        searchDelays.add(areaTicket / indexTicket);
-        searchQueue.add(areaTicket / searchFinalTime);
+        searchDelays.add(areaSearch / indexSearch);
+        searchQueue.add(areaSearch / searchFinalTime);
 
         sumUtilizations = 0.0;
         sumServices = 0.0;
